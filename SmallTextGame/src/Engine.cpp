@@ -1,7 +1,16 @@
 #include "Engine.hpp"
 
+Engine::~Engine(){
+  if(inHandler != NULL){
+    delete inHandler;
+  }  
+}
+
 void Engine::initialize(){
-    std::cout << "Initialize" << std::endl;
+    inHandler = new InputHandler();
+    
+    std::cout << "Welcome! To start press 's'" << std::endl;
+    
     this->running = true;
 }
 
@@ -21,6 +30,8 @@ void Engine::loop(){
 
 void Engine::processInput(){
     std::cout<< "processing input..." << std::endl;
+    if(this->inHandler->poll()->getInput() == "exit")
+      this->running = false;
 }
 
 void Engine::update(){
@@ -29,5 +40,4 @@ void Engine::update(){
 
 void Engine::render(){
     std::cout <<"rendering..." << std::endl;
-    this->running = false;
 }
